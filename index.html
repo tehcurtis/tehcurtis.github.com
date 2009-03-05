@@ -14,7 +14,7 @@
         codes.sort(function(a, b){
           return b.watchers - a.watchers
         })
-        
+        alert(codes);
         $.each(codes.slice(0, limit), function(){
           $('#codes').append('<li><a href="'+this.url+'">'+this.name+'</a></li>')
         })
