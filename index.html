@@ -7,14 +7,10 @@
       var limit = 20;
       
       $.getJSON('http://github.com/api/v1/json/tehcurtis?callback=?', function(data){
-        var codes = $.grep(data.user.repositories, function(){
-          return !this.fork
-        })
+        var codes = $.grep(data.user.repositories, function(){return !this.fork});
         
-        codes.sort(function(a, b){
-          return b.watchers - a.watchers
-        })
-        alert(codes);
+        codes.sort(function(a, b){return b.watchers - a.watchers})
+
         $.each(codes.slice(0, limit), function(){
           $('#codes').append('<li><a href="'+this.url+'">'+this.name+'</a></li>')
         })
