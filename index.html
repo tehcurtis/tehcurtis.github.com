@@ -30,9 +30,11 @@
       
       $.getJSON('http://github.com/api/v1/json/tehcurtis?callback=?', function(data){
         var codes = $.grep(data.user.repositories, function(){return !this.fork});
-        
-        codes.sort(function(a, b){return b.watchers - a.watchers})
-
+        console.log('a');
+        console.log(codes);        
+        codes.sort(function(a, b){return b.watchers - a.watchers});
+        console.log('b');
+        console.log(codes);
         $.each(codes.slice(0, limit), function(){
           $('ul#codes').append('<li><a href="'+this.url+'">'+this.name+'</a></li>')
         })
