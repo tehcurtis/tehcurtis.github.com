@@ -16,12 +16,11 @@
     <h2>stalk me</h2>
     <ul>
       <li><a href="mailto:curtis.edmond@gmail.com">email</a></li>
-      <li>blog</li>
-      <li>twiter</li>
-      <li>working with rails</li>
-      <li>linkdin</li>
-      <li>facebook</li>
-      <li>tumblr</li>
+      <li><a href="http://curtis.wordpress.com">blog</a></li>
+      <li><a href="http://twitter.com/tehcurtis">twitter</a></li>
+      <li><a href="http://workingwithrails.com/person/7484-curtis-edmond">working with rails</a></li>
+      <li><a href="http://www.linkedin.com/in/cedmond">linkdin</a></li>
+      <li><a href="http://tehcurtis.tumblr.com">tumblr</a></li>
     </ul>
   </div>
   
@@ -35,7 +34,7 @@
         codes.sort(function(a, b){return b.watchers - a.watchers})
 
         $.each(codes.slice(0, limit), function(){
-          $('#codes').append('<li><a href="'+this.url+'">'+this.name+'</a></li>')
+          $('ul#codes').append('<li><a href="'+this.url+'">'+this.name+'</a></li>')
         })
       })
     })
