@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>tehcurtis / curtis edmond / code and musings...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/stylesheets/bootstrap.min.css" media="all" rel="stylesheet" type="text/css">
+  <link href="/stylesheets/app.css" media="all" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-3 col-md-3 col-lg-3">
+        <h1 id="main-logo"><a href="/">tehcurtis</a></h1>
+        <h3> curtis edmond </h3>
+        <p>curtis.edmond@gmail.com</p>
+        <p>
+          <a href="http://twitter.com/tehcurtis">tehcurtis @ twitter</a> <br/>
+          <a href="http://github.com/tehcurtis">tehcurtis @ github</a>
+        </p>
+      </div>
+      <div class="col-sm-7 col-md-7 col-lg-7">
+        <h1># Hello shhhhh</h1>
+        <div class="content">
+          <p>So I wrote a <a href="http://rubygems.org/gems/shhhhh">pretty small gem</a> whose current main
+purpose is kepp the "/assets/.." entries from appearing in your dev log files
+and incidentally your server output (provided your server is logging to
+stdout). I just got tired of all of assets hiding the real meat of the request so I figured
+I would write something to scratch that itch.</p>
+
+<p>Now, there already is a project/gem that does basically the same thing. It is called <a href="https://github.com/evrone/quiet_assets">quiet_assets</a>
+and it is a fantastic little gem as well. In that gem, they basically alias_method_chain into the Rails::Rack::Logger#call method
+and do their business. I wanted to achieve the same result but with normal inheritance instead of "alias_method_chain"ing. Turns
+out I could so I did. I plan on adding some features when I get time so feel free to check in on it from time to time or even
+submit some pull requests or issues for any desired functionality.</p>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69065-20', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>
