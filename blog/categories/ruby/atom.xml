@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[curtis on code]]></title>
-  <link href="http://tehcurtis.github.io/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Ruby | curtis on code]]></title>
+  <link href="http://tehcurtis.github.io/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://tehcurtis.github.io/"/>
   <updated>2014-07-28T22:45:05-06:00</updated>
   <id>http://tehcurtis.github.io/</id>
@@ -25,7 +25,7 @@ the request so I figured I would write something to scratch that itch.</p>
 <p>Now, there already is a project/gem that does basically the same thing. It is called <a href="https://github.com/evrone/quiet_assets">quiet_assets</a> and it is
 a fantastic little gem as well. In that gem, they basically alias_method_chain into the Rails::Rack::Logger#call
 method and do their business. I wanted to achieve the same result but with normal inheritance instead
-of &ldquo;alias_method_chain&#8221;ing. Turns out I could so I did. I plan on adding some features when I get time so
+of &ldquo;alias_method_chain"ing. Turns out I could so I did. I plan on adding some features when I get time so
 feel free to check in on it from time to time or even submit some pull requests or issues for any desired functionality.</p>
 ]]></content>
   </entry>
