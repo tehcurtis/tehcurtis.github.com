@@ -1,0 +1,316 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Rescue Data From Your Dying Hard Drive With Single-user Mode - curtis on code</title>
+  <meta name="author" content="Curtis Edmond">
+
+  
+  <meta name="description" content="About a week or so ago, the hard drive in my Macbook decided to die. Right in the middle
+of some very intense work I was doing, all processes slowed &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://tehcurtis.github.io/blog/2014/08/02/rescue-data-from-your-dying-hard-drive-with-single-user-mode">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="curtis on code" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href='https://fonts.googleapis.com/css?family=Noto+Serif:400,700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">curtis on code</a></h1>
+  
+    <h2>code by curtis</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  
+  
+</ul>
+
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="http://github.com/tehcurtis">Github</a></li>
+  <li><a href="http://twitter.com/tehcurtis">Twitter</a></li>  
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Rescue Data From Your Dying Hard Drive With Single-user Mode</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-02T15:13:25-06:00" pubdate data-updated="true">Aug 2<sup>nd</sup>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>About a week or so ago, the hard drive in my Macbook decided to die. Right in the middle
+of some very intense work I was doing, all processes slowed to a crawl and the machine locked
+up. After staying frozen for a few seconds, I got the dreaded <a href="https://www.google.com/search?q=mac+os+x+screen+of+death&amp;rlz=1C5CHFA_enUS598US599&amp;es_sm=119&amp;source=lnms&amp;tbm=isch&amp;sa=X&amp;ei=dlXdU8DQM8fMsQSyw4DYCw&amp;ved=0CAgQ_AUoAQ&amp;biw=1172&amp;bih=674">screen of death</a>.
+This had only been maybe the second time I had ever seen that screen in the couple of
+years I had this Macbook so I didn&rsquo;t think too much of it.</p>
+
+<p>I rebooted my machine thinking everything would be fine. It started up and began to load
+through the recovery loading screen, but right before the loading was complete, the machine flat out died.
+It shut off with no other response. All I had was a black screen. After attempting to start the machine
+up a few more times and getting the same result, I started to get concerned.</p>
+
+<p>I had a an external hard drive that I had been using for my Time Machine backups so I knew
+I could get most of my data back but not the project I was furiously working on when this
+whole debacle started (I hadn&rsquo;t backed up for a few days). Was there a way I could access
+the files I was just working on? Turns out there was.</p>
+
+<p>Booting up my mac in single-user mode was the key. To start up in single user mode, hold CMD+S
+while your mac boots up until it drops you into single user mode. Starting up in single user mode will bring you
+right to a shell prompt. You will probably notice that the filesystem is in a read-only status. You&rsquo;ll want to
+re-mount the filesystem in read-write. Do so via this command:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>  /sbin/mount -uw /
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now you can attempt to fix your filesystem
+via <a href="http://osxdaily.com/2013/08/07/how-to-repair-a-mac-disk-with-fsck-from-single-user-mode/">fsck</a> but
+it may not completely fix what ails your drive. It most certainly did not in my case. So I set about
+trying to copy off my folder of work to my external usb hard drive. First I plugged my usb drive in and
+made sure the system noticed it. You can do this by checking &ldquo;ls /dev/&rdquo; before you plug the usb drive in, and then
+again after you&rsquo;ve plugged it in. After you&rsquo;ve plugged it in, you should notice something new named something like &ldquo;disk1s1&rdquo;
+or &ldquo;disk1s2&rdquo;. If you do, that&rsquo;s your usb device. Next, I created a spot to mount my usb drive via</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>  mkdir /Volumes/externalusbdrive
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then I actually mounted the drive via</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>  /sbin/mount_hfs /dev/disk1s1 /Volumes/externalusbdrive
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I &ldquo;ls&rdquo;&rsquo;d around a bit on /Volumes/externalusbdrive to make sure everything looked ok and that
+the external hard drive seemed to be mounted. After I confirmed everything seemed to be in working order,
+I continued to cp over the folders I needed. You could rsync too if you&rsquo;d like but meh, cp worked
+fine for me in this case. Once I had my folder, I unmounted my external usb hard drive via:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>  umount /dev/disk1s1
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And yes, that&rsquo;s umount and not &ldquo;unmount&rdquo;. Check /dev/ or df to make sure the device appears to
+be unmounted, it&rsquo;s safe to go ahead and remove your usb drive, with your work intact. Shut your
+machine off, replace the hard drive and continue on with your life.</p>
+
+<p>Shout out to <a href="http://jsalovaara.com/blog/backing-up-files-to-a-usb-drive-using-single-user-mode.html">this</a> blog post
+and <a href="http://alvinalexander.com/mac-os-x/mac-osx-single-user-mode-usb-drive">this</a> blog post in walking me
+ through how to do all of this. Much appreciated!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Curtis Edmond</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-02T15:13:25-06:00" pubdate data-updated="true">Aug 2<sup>nd</sup>, 2014</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://tehcurtis.github.io/blog/2014/08/02/rescue-data-from-your-dying-hard-drive-with-single-user-mode/" data-via="tehcurtis" data-counturl="http://tehcurtis.github.io/blog/2014/08/02/rescue-data-from-your-dying-hard-drive-with-single-user-mode/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/07/28/hello-shhhhh/" title="Previous Post: Hello shhhhh">&laquo; Hello shhhhh</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+  <aside class="sidebar">
+   
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:tehcurtis.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/08/02/rescue-data-from-your-dying-hard-drive-with-single-user-mode/">Rescue Data From Your Dying Hard Drive With Single-user Mode</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/28/hello-shhhhh/">Hello Shhhhh</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/tehcurtis">@tehcurtis</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'tehcurtis',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Curtis Edmond -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+<script>
+  $(document).ready(function() {  
+  var stickyNavTop = $('nav').offset().top;  
+    
+  var stickyNav = function(){  
+  var scrollTop = $(window).scrollTop();  
+         
+  if (scrollTop > stickyNavTop) {   
+      $('nav').addClass('sticky');  
+  } else {  
+      $('nav').removeClass('sticky');   
+  }  
+  };  
+    
+  stickyNav();  
+    
+  $(window).scroll(function() {  
+      stickyNav();  
+  });  
+  });  
+</script>
+
+
+</body>
+</html>
