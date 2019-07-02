@@ -1,0 +1,14 @@
+---
+layout: default
+---
+
+<small>{{ page.date | date: "%-d %B %Y" }}</small>
+<h1>{{ page.title }}</h1>
+
+{% if page.categories %}
+<small>categories: <em>{{ page.categories | join: "</em>, <em>" }}</em></small>
+{% endif %}
+
+<p class="view">by {{ page.author | default: site.author }}</p>
+
+{{content}}

@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <link rel="stylesheet" href="{{ "/assets/css/main.css" | prepend: site.baseurl | replace: '//', '/' }}">
 
 {% seo %}
   </head>
@@ -13,14 +14,17 @@
 
     <header>
       <div class="container">
-        <h1>{{ site.title | default: site.github.repository_name }}</h1>
+        <h1><a href="/" style="text-decoration:none">{{ site.title | default: site.github.repository_name }}</a></h1>
         <h2>{{ site.description | default: site.github.project_tagline }}</h2>
 
         <section id="downloads">
           {% if site.show_downloads %}
             <a href="{{ site.github.zip_url }}" class="btn">Download as .zip</a>
             <a href="{{ site.github.tar_url }}" class="btn">Download as .tar.gz</a>
-          {% endif %}
+            {% endif %}
+            <a href="{{ "/archive" | prepend: site.baseurl | replace: '//', '/' }}">Archive</a>
+            <a href="{{ "/about-me" | prepend: site.baseurl | replace: '//', '/' }}">About</h2></a>
+            <a href="{{ "/atom.xml" | prepend: site.baseurl | replace: '//', '/' }}">RSS</a>
           <a href="{{ site.github.repository_url }}" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
         </section>
       </div>
@@ -28,7 +32,9 @@
 
     <div class="container">
       <section id="main_content">
-        {{ content }}
+        <ul>
+          {{ content }}
+        </ul>
       </section>
     </div>
 
