@@ -17,7 +17,7 @@ title: curtis on code and things
 email: curtisedmond@gmail.com
 author: curtis
 description: >- # this means to ignore newlines until "baseurl:"
-  The best dev you know. Just a place for me to log some thoughts.
+  Just trying to be the best engineer/lead/manager I can be
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://tehcurtis.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: tehcurtis
