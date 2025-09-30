@@ -13,3 +13,7 @@ source/_stash
 source/stylesheets/screen.css
 vendor
 node_modules
+
+# Blog control script temporary files
+.jekyll.pid
+.jekyll.log

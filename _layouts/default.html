@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     <link rel="stylesheet" href="{{ "/assets/css/main.css" | prepend: site.baseurl | replace: '//', '/' }}">
+    <link rel="stylesheet" href="{{ "/assets/css/maze-animation.css" | prepend: site.baseurl | replace: '//', '/' }}">
 
 {% seo %}
   </head>
@@ -16,6 +17,19 @@
       <div class="container">
         <h1><a href="/" style="text-decoration:none">{{ site.title | default: site.github.repository_name }}</a></h1>
         <h2>{{ site.description | default: site.github.project_tagline }}</h2>
+      </div>
+      
+      <!-- Maze Animation - Full Width -->
+      <div class="maze-container">
+        <canvas id="maze-canvas" width="1600" height="200"></canvas>
+        <div class="maze-controls">
+          <button class="maze-control-btn" onclick="window.mazeAnimation?.restart()" title="Restart">↻</button>
+          <button class="maze-control-btn" onclick="window.mazeAnimation?.pause()" title="Pause">⏸</button>
+          <button class="maze-control-btn" onclick="window.mazeAnimation?.resume()" title="Resume">▶</button>
+        </div>
+      </div>
+      
+      <div class="container">
 
         <section id="downloads">
           {% if site.show_downloads %}
@@ -48,5 +62,11 @@
         ga('send', 'pageview');
       </script>
     {% endif %}
+
+    <!-- Maze Animation Scripts -->
+    <script src="{{ '/assets/js/maze-generator.js' | prepend: site.baseurl | replace: '//', '/' }}"></script>
+    <script src="{{ '/assets/js/pathfinder.js' | prepend: site.baseurl | replace: '//', '/' }}"></script>
+    <script src="{{ '/assets/js/character.js' | prepend: site.baseurl | replace: '//', '/' }}"></script>
+    <script src="{{ '/assets/js/maze-animation.js' | prepend: site.baseurl | replace: '//', '/' }}"></script>
   </body>
 </html>
