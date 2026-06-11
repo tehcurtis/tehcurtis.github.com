@@ -1,72 +1,59 @@
 <!DOCTYPE html>
 <html lang="{{ site.lang | default: "en-US" }}">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
-    <link rel="stylesheet" href="{{ "/assets/css/main.css" | prepend: site.baseurl | replace: '//', '/' }}">
-    <link rel="stylesheet" href="{{ "/assets/css/maze-animation.css" | prepend: site.baseurl | replace: '//', '/' }}">
-
+    <meta name="color-scheme" content="dark">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Silkscreen:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/assets/css/maze-animation.css" | relative_url }}">
+    <link rel="icon" type="image/svg+xml" href="{{ "/assets/images/favicon.svg" | relative_url }}">
+    <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ "/atom.xml" | relative_url }}">
 {% seo %}
   </head>
 
   <body>
+    <a class="skip-link" href="#main">skip to content</a>
 
-    <header>
-      <div class="container">
-        <h1><a href="/" style="text-decoration:none">{{ site.title | default: site.github.repository_name }}</a></h1>
-        <h2>{{ site.description | default: site.github.project_tagline }}</h2>
-      </div>
-      
-      <!-- Maze Animation - Full Width -->
-      <div class="maze-container">
-        <canvas id="maze-canvas" width="1600" height="200"></canvas>
-        <div class="maze-controls">
-          <button class="maze-control-btn" onclick="window.mazeAnimation?.restart()" title="Restart">↻</button>
-          <button class="maze-control-btn" onclick="window.mazeAnimation?.pause()" title="Pause">⏸</button>
-          <button class="maze-control-btn" onclick="window.mazeAnimation?.resume()" title="Resume">▶</button>
-        </div>
-      </div>
-      
-      <div class="container">
-
-        <section id="downloads">
-          {% if site.show_downloads %}
-            <a href="{{ site.github.zip_url }}" class="btn">Download as .zip</a>
-            <a href="{{ site.github.tar_url }}" class="btn">Download as .tar.gz</a>
-            {% endif %}
-            <a href="{{ "/archive" | prepend: site.baseurl | replace: '//', '/' }}">Archive</a>
-            <a href="{{ "/about-me" | prepend: site.baseurl | replace: '//', '/' }}">About</h2></a>
-            <a href="{{ "/atom.xml" | prepend: site.baseurl | replace: '//', '/' }}">RSS</a>
-          <a href="{{ site.github.repository_url }}" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
-        </section>
-      </div>
+    <header class="site-nav">
+      <a class="brand" href="{{ "/" | relative_url }}" aria-label="Home">
+        <svg class="brand-mark" width="20" height="20" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true">
+          <rect x="2" y="1" width="4" height="1" fill="#b6ff2e"/>
+          <rect x="1" y="2" width="2" height="1" fill="#b6ff2e"/>
+          <rect x="1" y="3" width="1" height="2" fill="#b6ff2e"/>
+          <rect x="1" y="5" width="2" height="1" fill="#b6ff2e"/>
+          <rect x="2" y="6" width="4" height="1" fill="#b6ff2e"/>
+          <rect x="5" y="2" width="1" height="1" fill="#ff3d81"/>
+          <rect x="5" y="5" width="1" height="1" fill="#ff3d81"/>
+        </svg>
+        <span class="brand-text">tehcurtis<span class="brand-cursor">_</span></span>
+      </a>
+      <nav class="nav-links" aria-label="Site">
+        <a href="{{ "/" | relative_url }}">posts</a>
+        <a href="{{ "/archive" | relative_url }}">archive</a>
+        <a href="{{ "/about-me" | relative_url }}">about</a>
+        <a href="https://github.com/{{ site.github_username }}" rel="me">github</a>
+        <a href="{{ "/atom.xml" | relative_url }}">rss</a>
+      </nav>
     </header>
 
-    <div class="container">
-      <section id="main_content">
-        <ul>
-          {{ content }}
-        </ul>
-      </section>
-    </div>
+    <main id="main" class="site-main">
+      {{ content }}
+    </main>
 
-    {% if site.google_analytics %}
-      <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-        ga('create', '{{ site.google_analytics }}', 'auto');
-        ga('send', 'pageview');
-      </script>
-    {% endif %}
-
-    <!-- Maze Animation Scripts -->
-    <script src="{{ '/assets/js/maze-generator.js' | prepend: site.baseurl | replace: '//', '/' }}"></script>
-    <script src="{{ '/assets/js/pathfinder.js' | prepend: site.baseurl | replace: '//', '/' }}"></script>
-    <script src="{{ '/assets/js/character.js' | prepend: site.baseurl | replace: '//', '/' }}"></script>
-    <script src="{{ '/assets/js/maze-animation.js' | prepend: site.baseurl | replace: '//', '/' }}"></script>
+    <footer class="site-footer">
+      <div class="skyline" role="img" aria-label="Pixel-art city skyline"></div>
+      <div class="footer-bar">
+        <span class="footer-id">tehcurtis &copy; {{ "now" | date: "%Y" }}</span>
+        <span class="footer-tag">software &middot; architecture &middot; ai</span>
+        <span class="footer-links">
+          <a href="https://github.com/{{ site.github_username }}">github</a>
+          <a href="https://www.linkedin.com/in/cedmond/">linkedin</a>
+          <a href="{{ "/atom.xml" | relative_url }}">rss</a>
+        </span>
+      </div>
+    </footer>
   </body>
 </html>

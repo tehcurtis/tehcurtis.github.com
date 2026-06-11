@@ -1,0 +1,48 @@
+---
+layout: default
+---
+
+<section class="hero">
+  <p class="hero-kicker">software &middot; architecture &middot; ai</p>
+  <h1 class="hero-title">
+    <span class="hero-line">curtis on</span>
+    <span class="hero-line hero-line-accent">code <em>&amp;</em> things</span>
+  </h1>
+  <p class="hero-sub">Field notes on software design, systems architecture, and AI &mdash; written while building.</p>
+</section>
+
+<div class="maze-strip">
+  <div class="strip-label" aria-hidden="true">// pathfinder.exe</div>
+  <canvas id="maze-canvas" width="1600" height="200"></canvas>
+  <div class="maze-controls">
+    <button class="maze-control-btn" onclick="window.mazeAnimation?.restart()" title="Restart">&#8635;</button>
+    <button class="maze-control-btn" onclick="window.mazeAnimation?.pause()" title="Pause">&#9208;</button>
+    <button class="maze-control-btn" onclick="window.mazeAnimation?.resume()" title="Resume">&#9654;</button>
+  </div>
+</div>
+
+<section class="post-index">
+  <header class="index-head">
+    <h2 class="index-title">writing</h2>
+    <span class="index-count">{{ site.posts.size | prepend: "000" | slice: -3, 3 }} entries</span>
+  </header>
+
+  {% assign total = site.posts.size %}
+  {% for post in site.posts %}
+  {% assign num = total | minus: forloop.index0 %}
+  <a class="post-row" href="{{ post.url | relative_url }}">
+    <span class="post-num">{{ num | prepend: "000" | slice: -3, 3 }}</span>
+    <span class="post-body">
+      <span class="post-title">{{ post.title }}</span>
+      <span class="post-excerpt">{{ post.content | strip_html | truncatewords: 32 }}</span>
+    </span>
+    <time class="post-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d %Y" }}</time>
+  </a>
+  {% endfor %}
+</section>
+
+<!-- Maze Animation Scripts -->
+<script src="{{ "/assets/js/maze-generator.js" | relative_url }}"></script>
+<script src="{{ "/assets/js/pathfinder.js" | relative_url }}"></script>
+<script src="{{ "/assets/js/character.js" | relative_url }}"></script>
+<script src="{{ "/assets/js/maze-animation.js" | relative_url }}"></script>

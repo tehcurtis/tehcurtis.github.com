@@ -38,11 +38,11 @@ class MazeAnimation {
         
         // Visual settings
         this.colors = {
-            wall: '#2c3e50',
-            path: '#ecf0f1',
-            character: '#000000',
-            pathTrail: '#3498db',
-            background: '#34495e'
+            wall: '#232b3f',
+            path: '#11151f',
+            character: '#ff3d81',
+            pathTrail: '#b6ff2e',
+            background: '#11151f'
         };
         
         // Performance tracking

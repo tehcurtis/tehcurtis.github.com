@@ -2,13 +2,32 @@
 layout: default
 ---
 
-<small>{{ page.date | date: "%-d %B %Y" }}</small>
-<h1>{{ page.title }}</h1>
+<article class="post">
+  <header class="post-header">
+    <p class="post-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%b %d %Y" }}</time>
+      <span class="meta-sep">/</span>
+      <span>by {{ page.author | default: site.author }}</span>
+      {% if page.categories and page.categories != empty %}
+      <span class="meta-sep">/</span>
+      <span class="meta-tags">{{ page.categories | join: " &middot; " }}</span>
+      {% endif %}
+    </p>
+    <h1 class="post-page-title">{{ page.title }}</h1>
+    <div class="dither-rule" aria-hidden="true"></div>
+  </header>
 
-{% if page.categories %}
-<small>categories: <em>{{ page.categories | join: "</em>, <em>" }}</em></small>
-{% endif %}
+  <div class="post-content">
+    {{ content }}
+  </div>
 
-<p class="view">by {{ page.author | default: site.author }}</p>
+  {% if page.tags and page.tags != empty %}
+  <footer class="post-footer">
+    <span class="post-tags">tags: {% for tag in page.tags %}<em>{{ tag }}</em>{% unless forloop.last %} &middot; {% endunless %}{% endfor %}</span>
+  </footer>
+  {% endif %}
 
-{{content}}
+  <nav class="post-nav">
+    <a href="{{ "/" | relative_url }}">&larr; back to index</a>
+  </nav>
+</article>

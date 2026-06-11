@@ -204,12 +204,14 @@ Key settings in `_config.yml`:
 - `url`: Site URL
 - `twitter_username`: Twitter handle
 - `github_username`: GitHub username
-- `theme`: Jekyll theme (currently: jekyll-theme-hacker)
+
+The site uses a custom design (no Jekyll theme): layouts live in `_layouts/`, styles in `_scss/_base.scss`.
 
 ## Plugins
 
 This blog uses the following Jekyll plugins:
 - `jekyll-feed` - Generates RSS/Atom feeds
+- `jekyll-seo-tag` - Generates SEO meta tags
 - `jekyll-compose` - Provides content management commands
 
 ## Updated Dependencies
@@ -231,7 +233,7 @@ The blog header now includes a full-width interactive maze-solving animation fea
 
 - **Maze Generation**: Recursive backtracking algorithm creates unique mazes
 - **A* Pathfinding**: Intelligent navigation from right to left
-- **Walking Character**: Black block person with realistic walking animation
+- **Walking Character**: 8x8 pixel-sprite runner with a two-frame walk cycle
 - **Full-Width Display**: Spans the entire browser width, breaking out of container constraints
 - **Larger Maze**: 60x10 cell maze with 20px cells for better visibility
 - **Interactive Controls**: Pause, resume, and restart functionality

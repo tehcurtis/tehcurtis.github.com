@@ -23,9 +23,9 @@ class Character {
         this.legOffset = 0;
 
         // Visual properties
-        this.color = '#000000'; // Black
-        this.eyeColor = '#ffffff';
-        this.shadowColor = 'rgba(0, 0, 0, 0.5)';
+        this.color = '#ff3d81'; // Hot magenta
+        this.eyeColor = '#0b0e16';
+        this.accentColor = '#b6ff2e';
 
         // Personality traits
         this.personality = {
@@ -93,153 +93,58 @@ class Character {
         this.targetY = y;
     }
 
+    // Pixel sprite frames on an 8x8 grid, facing right.
+    // '#' body, 'o' visor, '+' accent feet, '.' transparent
+    static SPRITES = {
+        stand: [
+            '..####..',
+            '.######.',
+            '.###oo#.',
+            '.######.',
+            '..####..',
+            '..#..#..',
+            '..#..#..',
+            '..+..+..'
+        ],
+        step: [
+            '..####..',
+            '.######.',
+            '.###oo#.',
+            '.######.',
+            '..####..',
+            '..#..#..',
+            '.##..##.',
+            '.+....+.'
+        ]
+    };
+
     // Draw the character on canvas
     draw(ctx) {
-        ctx.save();
+        const frames = Character.SPRITES;
+        const useStep = this.isMoving && Math.floor(this.walkCycle / Math.PI) % 2 === 0;
+        const sprite = useStep ? frames.step : frames.stand;
 
-        // Apply transformations
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.rotation);
-        ctx.scale(this.scale, this.scale);
+        const px = this.size / 8; // sprite pixel size; full 8x8 sprite spans this.size
+        const flip = this.direction === 'left' ? -1 : 1;
+        // Snap to the pixel grid so the sprite stays crisp
+        const originX = Math.round(this.x - 4 * px);
+        const originY = Math.round(this.y - 4 * px);
 
-        // Draw shadow
-        this.drawShadow(ctx);
-
-        // Draw walking person
-        this.drawWalkingPerson(ctx);
-
-        ctx.restore();
-    }
-
-    // Draw character shadow
-    drawShadow(ctx) {
-        ctx.fillStyle = this.shadowColor;
-        const shadowOffset = 3;
-        const bodyWidth = this.size * 0.6;
-        const bodyHeight = this.size * 0.8;
-        const headSize = this.size * 0.4;
-
-        // Body shadow
-        ctx.fillRect(
-            -bodyWidth/2 + shadowOffset,
-            -bodyHeight/2 + shadowOffset,
-            bodyWidth,
-            bodyHeight
-        );
-
-        // Head shadow
-        ctx.fillRect(
-            -headSize/2 + shadowOffset,
-            -this.size/2 + shadowOffset,
-            headSize,
-            headSize
-        );
-
-        // Leg shadows (with walking animation)
-        const legWidth = this.size * 0.15;
-        const legHeight = this.size * 0.3;
-        const legSpacing = this.size * 0.2;
-
-        const leftLegOffset = this.isMoving ? this.legOffset : 0;
-        const rightLegOffset = this.isMoving ? -this.legOffset : 0;
-        const leftLegSwing = this.isMoving ? Math.sin(this.walkCycle) * 2 : 0;
-        const rightLegSwing = this.isMoving ? -Math.sin(this.walkCycle) * 2 : 0;
-
-        ctx.fillRect(
-            -legSpacing/2 - legWidth/2 + leftLegSwing + shadowOffset,
-            bodyHeight/2 + leftLegOffset + shadowOffset,
-            legWidth,
-            legHeight
-        );
-        ctx.fillRect(
-            legSpacing/2 - legWidth/2 + rightLegSwing + shadowOffset,
-            bodyHeight/2 + rightLegOffset + shadowOffset,
-            legWidth,
-            legHeight
-        );
-    }
-
-    // Draw walking person
-    drawWalkingPerson(ctx) {
-        const bodyWidth = this.size * 0.6;
-        const bodyHeight = this.size * 0.8;
-        const headSize = this.size * 0.4;
-        const legWidth = this.size * 0.15;
-        const legHeight = this.size * 0.3;
-        const armWidth = this.size * 0.12;
-        const armHeight = this.size * 0.4;
-
-        ctx.fillStyle = this.color;
-
-        // Draw head
-        ctx.fillRect(-headSize/2, -this.size/2, headSize, headSize);
-
-        // Draw eyes
-        const eyeSize = headSize * 0.2;
-        const eyeOffset = headSize * 0.25;
-        ctx.fillStyle = this.eyeColor;
-        ctx.fillRect(-eyeOffset, -this.size/2 + eyeOffset, eyeSize, eyeSize);
-        ctx.fillRect(eyeOffset - eyeSize, -this.size/2 + eyeOffset, eyeSize, eyeSize);
-
-        // Draw body
-        ctx.fillStyle = this.color;
-        ctx.fillRect(-bodyWidth/2, -bodyHeight/2, bodyWidth, bodyHeight);
-
-        // Draw arms (with walking animation)
-        const armOffset = this.isMoving ? Math.sin(this.walkCycle) * 2 : 0;
-        ctx.fillRect(
-            -bodyWidth/2 - armWidth,
-            -bodyHeight/2 + armOffset,
-            armWidth,
-            armHeight
-        );
-        ctx.fillRect(
-            bodyWidth/2,
-            -bodyHeight/2 - armOffset,
-            armWidth,
-            armHeight
-        );
-
-        // Draw legs (with walking animation)
-        const legSpacing = this.size * 0.2;
-        const leftLegOffset = this.isMoving ? this.legOffset : 0;
-        const rightLegOffset = this.isMoving ? -this.legOffset : 0;
-
-        // Add horizontal leg swing for more natural walking
-        const leftLegSwing = this.isMoving ? Math.sin(this.walkCycle) * 2 : 0;
-        const rightLegSwing = this.isMoving ? -Math.sin(this.walkCycle) * 2 : 0;
-
-        // Left leg
-        ctx.fillRect(
-            -legSpacing/2 - legWidth/2 + leftLegSwing,
-            bodyHeight/2 + leftLegOffset,
-            legWidth,
-            legHeight
-        );
-
-        // Right leg
-        ctx.fillRect(
-            legSpacing/2 - legWidth/2 + rightLegSwing,
-            bodyHeight/2 + rightLegOffset,
-            legWidth,
-            legHeight
-        );
-
-        // Draw feet
-        const footWidth = legWidth * 1.5;
-        const footHeight = legWidth * 0.8;
-        ctx.fillRect(
-            -legSpacing/2 - footWidth/2 + leftLegSwing,
-            bodyHeight/2 + legHeight + leftLegOffset,
-            footWidth,
-            footHeight
-        );
-        ctx.fillRect(
-            legSpacing/2 - footWidth/2 + rightLegSwing,
-            bodyHeight/2 + legHeight + rightLegOffset,
-            footWidth,
-            footHeight
-        );
+        for (let row = 0; row < 8; row++) {
+            for (let col = 0; col < 8; col++) {
+                const cell = sprite[row][flip === -1 ? 7 - col : col];
+                if (cell === '.') continue;
+                ctx.fillStyle = cell === '#' ? this.color
+                    : cell === 'o' ? this.eyeColor
+                    : this.accentColor;
+                ctx.fillRect(
+                    originX + Math.round(col * px),
+                    originY + Math.round(row * px),
+                    Math.ceil(px),
+                    Math.ceil(px)
+                );
+            }
+        }
     }
 
     // Utility function to darken colors
