@@ -4,9 +4,9 @@ title: About
 permalink: /about-me/
 ---
 
-My name is Curtis. I'm a software/AI engineer — I like to build stuff and to learn new things.
+My name is Curtis. I make/read things.
 
-This blog is where I keep field notes on software design, systems architecture, and AI.
+This is where I post field notes on software design, systems architecture, ai, and anything else top of mind.
 
 Find me elsewhere:
 
