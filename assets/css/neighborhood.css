@@ -1,0 +1,84 @@
+/* Shared city design: a continuous city behind opaque, stepped reading panels. */
+.city-site { background: #0b0e16; }
+.city-site::before { display: none; }
+.city-site .site-main { position: relative; z-index: auto; max-width: 1160px; padding-bottom: 64px; }
+.city-backdrop { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background: #0b0e16; }
+.city-backdrop img { width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; }
+.city-backdrop::after { content: ""; position: absolute; inset: 0; background: rgba(5, 10, 20, .06); }
+.city-backdrop canvas { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; }
+.city-site { isolation: isolate; }
+.city-site .site-nav { margin-top: 24px; background: #101722; border: 2px solid #45566a; box-shadow: 6px 6px 0 #070c14; max-width: 1064px; }
+.pixel-panel {
+  position: relative;
+  background: #101722;
+  border: 8px solid;
+  border-color: #a3bbc9 #4b687f #344b65 #7799ad;
+  /* Flat pixel steps around a broad, light-catching frame. */
+  box-shadow:
+    inset 0 0 0 4px #080e17,
+    0 -4px 0 #192c40, 0 4px 0 #192c40,
+    -4px 0 0 #192c40, 4px 0 0 #192c40,
+    0 -8px 0 #080e17, 0 8px 0 #080e17,
+    -8px 0 0 #080e17, 8px 0 0 #080e17,
+    8px 12px 0 #080e17, 12px 8px 0 #080e17;
+}
+.pixel-panel::before {
+  content: "";
+  position: absolute;
+  left: 20px;
+  top: -8px;
+  width: 56px;
+  height: 8px;
+  background: var(--acid);
+  box-shadow: inset 0 3px 0 #e1ff9e;
+}
+.city-site .hero { margin: 76px 0 180px; max-width: 790px; padding: clamp(24px, 4vw, 44px); }
+.city-site .post-index { margin-left: 64px; padding: clamp(22px, 3.5vw, 40px); }
+.city-site .post-index::before { background: var(--magenta); box-shadow: inset 0 3px 0 #ffaccb; }
+.city-site .index-head { border-bottom-color: #52677a; }
+.city-site .post-row { grid-template-columns: 48px 1fr auto; gap: 20px; }
+.city-site .post-title { font-size: clamp(22px, 2.8vw, 32px); }
+.city-site .post-row:last-child { border-bottom: 0; }
+.city-site .site-footer { background: #101722; border-top: 4px solid #45566a; margin-top: 80px; }
+.city-site .skyline { display: none; }
+.city-site .footer-bar { border-top: 0; }
+@media (min-width: 1700px) { .city-backdrop img { object-position: center 55%; } }
+@media (max-width: 1120px) { .city-site .site-nav { margin-left: 24px; margin-right: 24px; } }
+@media (max-width: 720px) {
+  .city-site .site-nav { margin: 16px 16px 0; padding: 16px; flex-wrap: wrap; }
+  .city-site .nav-links { flex-wrap: wrap; }
+  .city-site .hero { margin-top: 56px; margin-bottom: 120px; }
+  .city-site .post-index { margin-left: 0; }
+  .city-site .post-row { grid-template-columns: 1fr; gap: 8px; }
+  .city-site .site-main { padding-left: 24px; padding-right: 24px; }
+  .city-backdrop img { object-position: 42% center; }
+}
+@media print {
+  .city-backdrop { display: none; }
+  .city-site .hero { margin: 24px 0; }
+  .city-site .post-index { margin: 0; }
+  .pixel-panel { box-shadow: none; border: 1px solid #52677a; }
+}
+
+/* Keep long-form writing at its original reading width inside the frame. */
+.city-site .post.pixel-panel {
+  max-width: 872px;
+  margin: 64px auto 0;
+  padding: clamp(24px, 4vw, 48px);
+  overflow-wrap: anywhere;
+}
+.city-site .not-found.pixel-panel {
+  max-width: 872px;
+  margin: 64px auto 0;
+  padding: clamp(24px, 5vw, 64px);
+}
+.city-site .post-content pre { overflow-wrap: normal; }
+.city-site .post-content table { display: block; max-width: 100%; overflow-x: auto; }
+@media (max-width: 720px) {
+  .city-site .post.pixel-panel,
+  .city-site .not-found.pixel-panel { margin-top: 48px; padding: 24px 18px; }
+}
+@media print {
+  .city-site .post.pixel-panel,
+  .city-site .not-found.pixel-panel { margin-top: 24px; }
+}

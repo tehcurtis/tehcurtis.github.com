@@ -8,13 +8,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Silkscreen:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
-    <link rel="stylesheet" href="{{ "/assets/css/maze-animation.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/assets/css/neighborhood.css" | relative_url }}">
     <link rel="icon" type="image/svg+xml" href="{{ "/assets/images/favicon.svg" | relative_url }}">
     <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ "/atom.xml" | relative_url }}">
 {% seo %}
   </head>
 
-  <body>
+  <body class="city-site{% if page.layout == "home" %} city-home{% endif %}">
+<div class="city-backdrop" data-neighborhood aria-hidden="true">
+  <img src="{{ '/assets/images/city-backdrop.png' | relative_url }}" alt="" width="1536" height="1024">
+  <canvas width="1000" height="340"></canvas>
+  <script type="application/json" data-scene-config>{{ site.data.neighborhood | jsonify }}</script>
+</div>
+
+
     <a class="skip-link" href="#main">skip to content</a>
 
     <header class="site-nav">
@@ -55,5 +62,6 @@
         </span>
       </div>
     </footer>
+    <script src="{{ "/assets/js/neighborhood.js" | relative_url }}" defer></script>
   </body>
 </html>

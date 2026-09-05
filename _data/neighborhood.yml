@@ -1,0 +1,8 @@
+# Defaults for the homepage scene. Season: auto, spring, summer, autumn, winter.
+season: auto
+# Auto follows Northern Hemisphere meteorological seasons.
+# Street-specific effects are parked until routes are mapped to the new district.
+animations:
+  packets: false
+  signals: false
+  weather: true

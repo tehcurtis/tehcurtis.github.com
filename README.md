@@ -227,25 +227,39 @@ This blog has been upgraded to Ruby 3.2.9 with the following key gem versions:
 
 All gems have been updated to their latest compatible versions for Ruby 3.2.9.
 
-## 🎮 Maze Animation Feature
+## Pixel neighborhood
 
-The blog header now includes a full-width interactive maze-solving animation featuring:
+The site uses a continuous city backdrop behind solid, stepped pixel frames
+for the homepage, articles, archive, about page, and 404 page. Long-form articles
+retain a comfortable reading width inside the frame. The artwork lives in `assets/images/city-backdrop.png`;
+`assets/css/neighborhood.css` controls the homepage composition. The art direction
+uses clean, flat isometric pixel shapes and colorful navy-night tones, informed
+by the supplied pixorama references. Reading surfaces remain fully opaque.
 
-- **Maze Generation**: Recursive backtracking algorithm creates unique mazes
-- **A* Pathfinding**: Intelligent navigation from right to left
-- **Walking Character**: 8x8 pixel-sprite runner with a two-frame walk cycle
-- **Full-Width Display**: Spans the entire browser width, breaking out of container constraints
-- **Larger Maze**: 60x10 cell maze with 20px cells for better visibility
-- **Interactive Controls**: Pause, resume, and restart functionality
-- **Responsive Design**: Adapts to different screen sizes
-- **Performance Optimized**: Respects user motion preferences and battery life
+Edit `_data/neighborhood.yml` to choose `auto`, `spring`, `summer`, `autumn`, or
+`winter`, and enable or disable named effects. Auto follows the visitor's local
+date and Northern Hemisphere meteorological seasons. There are no visitor controls.
+Spring adds petals, autumn leaves, winter snow, and summer clear air. Seasons
+currently change the overlay rather than the illustrated buildings.
 
-### Animation Controls
-- **↻ Restart**: Generate a new maze and restart the animation
-- **⏸ Pause**: Pause the character movement
-- **▶ Resume**: Resume the animation
+Effects live in the `effects` object in `assets/js/neighborhood.js`. Each receives
+the canvas context, elapsed time in milliseconds, and season. Add a function and
+an entry under `animations` in the YAML to add an effect; set it to false to remove
+it from the scene. Use the shared animation loop rather than independent timers.
+The old strip's packet and signal effects are disabled until their coordinates
+are remapped to the new city. The previous illustration is retained for iteration.
 
-The animation automatically restarts when the character reaches the goal, providing continuous entertainment for visitors.
+The background remains still for reduced-motion preferences, and animation stops
+when the document is hidden. The solid reading surfaces cover the animation.
+The illustration works without JavaScript.
+
+### Local preview
+
+```bash
+bundle exec jekyll serve --host 127.0.0.1 --port 4001
+```
+
+Open `http://127.0.0.1:4001/`. The shared layout supplies the backdrop and animation script on all HTML pages.
 
 ## Troubleshooting
 

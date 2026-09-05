@@ -2,25 +2,15 @@
 layout: default
 ---
 
-<section class="hero">
+<section class="hero pixel-panel">
   <p class="hero-kicker">software &middot; architecture &middot; ai</p>
   <h1 class="hero-title">
-    <span class="hero-line">curtis on</span>
-    <span class="hero-line hero-line-accent">code <em>&amp;</em> things</span>
+    <span class="hero-line">notes from</span>
+    <span class="hero-line hero-line-accent">the field</span>
   </h1>
-  <p class="hero-sub">Field notes on software design, systems architecture, and AI &mdash; written while building.</p>
 </section>
 
-<div class="maze-strip">
-  <canvas id="maze-canvas" width="1600" height="200"></canvas>
-  <div class="maze-controls">
-    <button class="maze-control-btn" onclick="window.mazeAnimation?.restart()" title="Restart">&#8635;</button>
-    <button class="maze-control-btn" onclick="window.mazeAnimation?.pause()" title="Pause">&#9208;</button>
-    <button class="maze-control-btn" onclick="window.mazeAnimation?.resume()" title="Resume">&#9654;</button>
-  </div>
-</div>
-
-<section class="post-index">
+<section class="post-index pixel-panel">
   <header class="index-head">
     <h2 class="index-title">writing</h2>
     <span class="index-count">{{ site.posts.size | prepend: "000" | slice: -3, 3 }} entries</span>
@@ -39,9 +29,3 @@ layout: default
   </a>
   {% endfor %}
 </section>
-
-<!-- Maze Animation Scripts -->
-<script src="{{ "/assets/js/maze-generator.js" | relative_url }}"></script>
-<script src="{{ "/assets/js/pathfinder.js" | relative_url }}"></script>
-<script src="{{ "/assets/js/character.js" | relative_url }}"></script>
-<script src="{{ "/assets/js/maze-animation.js" | relative_url }}"></script>
