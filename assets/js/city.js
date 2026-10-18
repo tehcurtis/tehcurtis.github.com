@@ -1216,7 +1216,7 @@ function visibleRect() {
     const x = mainEl.getBoundingClientRect().right;
     r = { x, y: navBottom, w: VW - x, h: VH - navBottom };
   } else {
-    r = { x: 0, y: navBottom, w: VW, h: Math.max(120, VH * .42 - navBottom) };
+    r = { x: 0, y: navBottom, w: VW, h: Math.max(120, VH * .42) };
   }
   r.w = Math.max(r.w, 120); r.h = Math.max(r.h, 120);
   return r;
