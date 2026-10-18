@@ -227,31 +227,27 @@ This blog has been upgraded to Ruby 3.2.9 with the following key gem versions:
 
 All gems have been updated to their latest compatible versions for Ruby 3.2.9.
 
-## Pixel neighborhood
+## Living city
 
-The site uses a continuous city backdrop behind solid, stepped pixel frames
-for the homepage, articles, archive, about page, and 404 page. Long-form articles
-retain a comfortable reading width inside the frame. The artwork lives in `assets/images/city-backdrop.png`;
-`assets/css/neighborhood.css` controls the homepage composition. The art direction
-uses clean, flat isometric pixel shapes and colorful navy-night tones, informed
-by the supplied pixorama references. Reading surfaces remain fully opaque.
+The backdrop is a procedural isometric pixel city drawn on a canvas by
+`assets/js/city.js` (no image assets), styled by `assets/css/city.css`. Content
+sits in a left-docked reading column so the camera target stays visible on the right.
 
-Edit `_data/neighborhood.yml` to choose `auto`, `spring`, `summer`, `autumn`, or
-`winter`, and enable or disable named effects. Auto follows the visitor's local
-date and Northern Hemisphere meteorological seasons. There are no visitor controls.
-Spring adds petals, autumn leaves, winter snow, and summer clear air. Seasons
-currently change the overlay rather than the illustrated buildings.
+Each page frames a different part of the city via a `city:` key in its front matter:
+`overview` (default), `library`, `curtis`, `tour` (default for posts), or `robot`
+(the 404 page). The camera resumes from where the previous page left it when
+navigating within a session.
 
-Effects live in the `effects` object in `assets/js/neighborhood.js`. Each receives
-the canvas context, elapsed time in milliseconds, and season. Add a function and
-an entry under `animations` in the YAML to add an effect; set it to false to remove
-it from the scene. Use the shared animation loop rather than independent timers.
-The old strip's packet and signal effects are disabled until their coordinates
-are remapped to the new city. The previous illustration is retained for iteration.
+Curtis's avatar follows a daily schedule in Mountain Time (America/Denver).
+Traffic, weather, and seasons are seeded from the clock, so every visitor sees the
+same moment. A hidden time-machine panel (clock, scrubber, weather override)
+unlocks with `?timemachine` and stays on for the browser session.
 
-The background remains still for reduced-motion preferences, and animation stops
-when the document is hidden. The solid reading surfaces cover the animation.
-The illustration works without JavaScript.
+Tweakable constants live near the top of `city.js`: `AVATAR` (palette), the
+`WEEKDAY` / `WEEKEND` schedules, `TITLES` (cinema marquee), `LMK` (landmarks),
+and `WTABLE` (weather odds).
+
+The city respects `prefers-reduced-motion` and pauses in hidden tabs.
 
 ### Local preview
 
@@ -259,7 +255,7 @@ The illustration works without JavaScript.
 bundle exec jekyll serve --host 127.0.0.1 --port 4001
 ```
 
-Open `http://127.0.0.1:4001/`. The shared layout supplies the backdrop and animation script on all HTML pages.
+Open `http://127.0.0.1:4001/`. The shared layout supplies the city canvas and `city.js` on all HTML pages.
 
 ## Troubleshooting
 
