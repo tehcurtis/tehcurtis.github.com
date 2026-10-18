@@ -1,0 +1,124 @@
+/* Living city: a full-viewport canvas (assets/js/city.js) behind a left-docked reading column. */
+.city-site { --city-gutter: clamp(24px, 4vw, 48px); background: #0b0e16; isolation: isolate; }
+.city-site::before { display: none; }
+[hidden] { display: none !important; }
+
+/* Canvas, HUD and tooltip. _base.scss makes every body child position: relative, hence the !important. */
+.city-canvas { position: fixed !important; inset: 0; width: 100%; height: 100%; display: block; z-index: 0 !important; cursor: grab; touch-action: auto; }
+.city-canvas.dragging { cursor: grabbing; }
+.city-canvas.pointing { cursor: pointer; }
+
+.hud {
+  position: fixed !important; z-index: 4; right: 16px; bottom: 16px; width: min(380px, calc(100% - 32px));
+  display: grid; gap: 10px; padding: 14px 16px; background: rgba(16, 23, 34, .94); border: 2px solid #45566a; box-shadow: 5px 5px 0 #070c14;
+}
+.hud .top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.clock { font-family: var(--font-pixel); font-size: 20px; color: var(--text); font-variant-numeric: tabular-nums; }
+.dow { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.status { margin: 0; font-size: 14px; line-height: 1.45; color: #c9d1de; }
+.status b { color: var(--acid); font-weight: 600; }
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.controls button {
+  padding: 5px 10px; background: #0c121c; color: var(--muted); border: 2px solid #2f3e54; cursor: pointer;
+  font-family: var(--font-mono); font-size: 12px;
+}
+.controls select { padding: 5px 6px; background: #0c121c; color: var(--muted); border: 2px solid #2f3e54; font-family: var(--font-mono); font-size: 12px; }
+.controls button:hover { color: var(--text); border-color: #45566a; }
+.controls button[aria-pressed="true"] { color: var(--ink); background: var(--acid); border-color: var(--acid); }
+.controls input[type=range] { flex: 1 1 140px; min-width: 0; accent-color: var(--acid); }
+.hint { margin: 0; font-family: var(--font-mono); font-size: 11px; color: #6c7890; }
+.tip {
+  position: fixed !important; z-index: 5; pointer-events: none; padding: 4px 8px; background: #0b0e16; color: var(--acid);
+  border: 2px solid var(--acid); font-family: var(--font-pixel); font-size: 11px; letter-spacing: .05em; white-space: nowrap;
+}
+
+/* "Right now" card on the about page, filled in by city.js. */
+.now { border: 2px solid #2b3a50; background: #0c121c; padding: 14px 16px; display: grid; gap: 6px; margin: 0 0 24px; }
+.now .label { font-family: var(--font-pixel); font-size: 11px; letter-spacing: .08em; color: var(--acid); text-transform: uppercase; }
+.now .what { font-family: var(--font-display); font-size: 20px; line-height: 1.25; }
+.now .when { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+
+/* Reading column, docked left so the camera target stays visible on the right. */
+.city-site .site-nav { width: auto; max-width: none; margin: 24px var(--city-gutter) 0; background: #101722; border: 2px solid #45566a; box-shadow: 6px 6px 0 #070c14; }
+.city-site .site-main { margin: 0 0 0 var(--city-gutter); width: min(480px, 40vw); max-width: none; padding: 0 0 64px; }
+body[data-city-scene="tour"] .site-main { width: min(720px, 56vw); }
+
+.pixel-panel {
+  position: relative;
+  background: #101722;
+  border: 8px solid;
+  border-color: #a3bbc9 #4b687f #344b65 #7799ad;
+  /* Flat pixel steps around a broad, light-catching frame. */
+  box-shadow:
+    inset 0 0 0 4px #080e17,
+    0 -4px 0 #192c40, 0 4px 0 #192c40,
+    -4px 0 0 #192c40, 4px 0 0 #192c40,
+    0 -8px 0 #080e17, 0 8px 0 #080e17,
+    -8px 0 0 #080e17, 8px 0 0 #080e17,
+    8px 12px 0 #080e17, 12px 8px 0 #080e17;
+}
+.pixel-panel::before {
+  content: "";
+  position: absolute;
+  left: 20px;
+  top: -8px;
+  width: 56px;
+  height: 8px;
+  background: var(--acid);
+  box-shadow: inset 0 3px 0 #e1ff9e;
+}
+.city-site .hero { margin: 40px 0; max-width: none; padding: clamp(24px, 4vw, 44px); }
+.city-site .post-index { margin-left: 0; padding: clamp(22px, 3.5vw, 40px); }
+.city-site .post-index::before { background: var(--magenta); box-shadow: inset 0 3px 0 #ffaccb; }
+.city-site .index-head { border-bottom-color: #52677a; }
+.city-site .post-row { grid-template-columns: 48px 1fr auto; gap: 20px; }
+.city-site .post-title { font-size: clamp(22px, 2.8vw, 32px); }
+.city-site .post-row:last-child { border-bottom: 0; }
+.city-site .site-footer { background: #101722; border-top: 4px solid #45566a; margin: 80px 0 0 var(--city-gutter); width: min(480px, 40vw); }
+body[data-city-scene="tour"] .site-footer { width: min(720px, 56vw); }
+.city-site .footer-bar { border-top: 0; margin: 0; max-width: none; }
+
+/* Long-form writing and the 404 fill the column. */
+.city-site .post.pixel-panel {
+  max-width: none;
+  margin: 40px 0 0;
+  padding: clamp(24px, 4vw, 48px);
+  overflow-wrap: anywhere;
+}
+.city-site .not-found.pixel-panel {
+  max-width: none;
+  margin: 40px 0 0;
+  padding: clamp(24px, 5vw, 64px);
+}
+.city-site .post-content pre { overflow-wrap: normal; }
+.city-site .post-content table { display: block; max-width: 100%; overflow-x: auto; }
+
+@media (max-width: 760px) {
+  .hud { left: 10px; right: 10px; bottom: 10px; width: auto; }
+  .city-site .site-main,
+  .city-site .site-footer,
+  body[data-city-scene="tour"] .site-main,
+  body[data-city-scene="tour"] .site-footer { width: auto; margin-left: 12px; margin-right: 12px; }
+  .city-site .site-main { margin-top: 42vh; }
+  .city-site .site-footer { margin-top: 48px; }
+}
+@media (max-width: 720px) {
+  .city-site .site-nav { margin: 16px 12px 0; padding: 16px; flex-wrap: wrap; }
+  .city-site .nav-links { flex-wrap: wrap; }
+  .city-site .hero { margin-top: 32px; margin-bottom: 32px; }
+  .city-site .post-index { margin-left: 0; }
+  .city-site .post-row { grid-template-columns: 1fr; gap: 8px; }
+  .city-site .post.pixel-panel,
+  .city-site .not-found.pixel-panel { margin-top: 32px; padding: 24px 18px; }
+}
+@media print {
+  .city-canvas, .hud, .tip { display: none !important; }
+  .city-site .site-nav { margin: 0; }
+  .city-site .site-main, .city-site .site-footer,
+  body[data-city-scene="tour"] .site-main, body[data-city-scene="tour"] .site-footer { width: auto; margin-left: 0; margin-right: 0; margin-top: 0; }
+  .city-site .hero { margin: 24px 0; }
+  .city-site .post-index { margin: 0; }
+  .pixel-panel { box-shadow: none; border: 1px solid #52677a; }
+  .city-site .post.pixel-panel,
+  .city-site .not-found.pixel-panel { margin-top: 24px; }
+}

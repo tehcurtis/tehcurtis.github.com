@@ -8,19 +8,32 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Silkscreen:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
-    <link rel="stylesheet" href="{{ "/assets/css/neighborhood.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/assets/css/city.css" | relative_url }}">
     <link rel="icon" type="image/svg+xml" href="{{ "/assets/images/favicon.svg" | relative_url }}">
     <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ "/atom.xml" | relative_url }}">
 {% seo %}
   </head>
 
-  <body class="city-site{% if page.layout == "home" %} city-home{% endif %}">
-<div class="city-backdrop" data-neighborhood aria-hidden="true">
-  <img src="{{ '/assets/images/city-backdrop.png' | relative_url }}" alt="" width="1536" height="1024">
-  <canvas width="1000" height="340"></canvas>
-  <script type="application/json" data-scene-config>{{ site.data.neighborhood | jsonify }}</script>
-</div>
-
+{%- assign city_scene = page.city -%}{%- unless city_scene -%}{%- if page.layout == "post" -%}{%- assign city_scene = "tour" -%}{%- else -%}{%- assign city_scene = "overview" -%}{%- endif -%}{%- endunless -%}
+  <body class="city-site" data-city-scene="{{ city_scene }}">
+    <canvas id="city" class="city-canvas" aria-hidden="true"></canvas>
+    <aside class="hud" aria-label="City clock" hidden>
+      <div class="top"><span class="clock" id="clock">--:--</span><span class="dow" id="dow"></span></div>
+      <p class="status" id="status" aria-live="polite"></p>
+      <div class="controls">
+        <button id="live" type="button" aria-pressed="true">live</button>
+        <button id="ff" type="button" aria-pressed="false">120×</button>
+        <input id="scrub" type="range" min="0" max="1439" step="1" value="0" aria-label="Time of day">
+        <button id="weekend" type="button" aria-pressed="false">weekend</button>
+        <select id="weather" aria-label="Weather">
+          <option value="auto">weather: auto</option><option value="clear">clear</option><option value="clouds">cloudy</option>
+          <option value="rain">rain</option><option value="storm">thunderstorm</option><option value="snow">snow</option>
+          <option value="fog">fog</option><option value="wind">windy</option>
+        </select>
+      </div>
+      <p class="hint">time machine · drag to pan · ctrl/⌘+scroll to zoom · click the library, office or home</p>
+    </aside>
+    <div class="tip" id="tip" hidden></div>
 
     <a class="skip-link" href="#main">skip to content</a>
 
@@ -51,7 +64,6 @@
     </main>
 
     <footer class="site-footer">
-      <div class="skyline" role="img" aria-label="Pixel-art city skyline"></div>
       <div class="footer-bar">
         <span class="footer-id">tehcurtis &copy; {{ "now" | date: "%Y" }}</span>
         <span class="footer-tag">software &middot; architecture &middot; ai</span>
@@ -62,6 +74,6 @@
         </span>
       </div>
     </footer>
-    <script src="{{ "/assets/js/neighborhood.js" | relative_url }}" defer></script>
+    <script src="{{ "/assets/js/city.js" | relative_url }}" defer></script>
   </body>
 </html>
